@@ -7,6 +7,7 @@ mod request_context;
 mod response;
 mod server;
 mod server_context;
+pub mod data_loader_type;
 
 use std::time::Duration;
 

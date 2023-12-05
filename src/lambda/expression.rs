@@ -1,10 +1,10 @@
-use std::fmt::Debug;
+ use std::fmt::Debug;
 use std::future::Future;
 use std::pin::Pin;
 use std::sync::Arc;
 
 use anyhow::Result;
-use async_graphql::dataloader::{DataLoader, NoCache};
+use async_graphql::dataloader::NoCache;
 use serde::Serialize;
 use serde_json::Value;
 use thiserror::Error;
@@ -17,6 +17,7 @@ use crate::javascript;
 use crate::json::JsonLike;
 use crate::lambda::EvaluationContext;
 use crate::request_template::RequestTemplate;
+use crate::http::data_loader_type::DataLoader; 
 
 #[derive(Clone, Debug)]
 pub enum Expression {
@@ -112,7 +113,9 @@ impl Expression {
                   .clone()
                   .map(|s| s.headers)
                   .unwrap_or_default();
+
                 let endpoint_key = crate::http::DataLoaderRequest::new(req, headers);
+                
                 let resp = dl
                   .as_ref()
                   .unwrap()
